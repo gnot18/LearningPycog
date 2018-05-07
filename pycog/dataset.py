@@ -146,7 +146,7 @@ class Dataset(object):
             self.trial_idx = 0
 
             self.trials = []
-            for b in xrange(self.batch_size):
+            for b in range(self.batch_size):
                 params = {
                     'callback_results': callback_results,
                     'target_output':    True,

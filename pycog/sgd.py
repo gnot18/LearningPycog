@@ -11,7 +11,7 @@ with the modifications described in
 from __future__ import absolute_import
 from __future__ import division
 
-import cPickle as pickle
+import pickle
 import datetime
 import os
 import sys
@@ -342,7 +342,7 @@ class SGD(object):
         tr_gnorm    = None
         try:
             tstart = datetime.datetime.now()
-            for iter in xrange(first_iter, 1+self.p['max_iter']):
+            for iter in range(first_iter, 1+self.p['max_iter']):
                 if iter % checkfreq == 1:
                     #---------------------------------------------------------------------
                     # Timestamp
