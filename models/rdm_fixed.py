@@ -68,7 +68,7 @@ for i in INH:
     Crec[i,EXC] = 1
     Crec[i,INH] = np.sum(Crec[i,EXC])/(len(INH)-1)
     Crec[i,i]   = 0
-Crec /= np.linalg.norm(Crec, axis=1)[:,np.newaxis]
+Crec /= np.linalg.norm(Crec, axis=1)[:,np.newaxis]  # normalize
 
 #-----------------------------------------------------------------------------------------
 # Output connectivity

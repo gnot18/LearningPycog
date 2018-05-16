@@ -43,146 +43,146 @@ class Trainer(object):
           -------
 
           Nin : int, optional
-                Number of input units.
+                Number of input units.  (default = 0)
 
           N : int, optional
-              Number of recurrent units.
+              Number of recurrent units.  (default = 100)
 
           Nout : int, optional
-                 Number of output units.
+                 Number of output units.  (default = 1)
 
           train_brec : bool, optional
-                       Whether to train recurrent biases.
+                       Whether to train recurrent biases.  (default = False)
 
           brec : float, optional
-                 Initial value of the recurrent bias.
+                 Initial value of the recurrent bias.  (default = 0)
 
           train_bout : bool, optional
-                       Whether to train output biases.
+                       Whether to train output biases.  (default = False)
 
           bout : float, optional
-                 Initial value of the output bias
+                 Initial value of the output bias.  (default = 0)
 
           train_x0 : bool, optional
-                     Whether to optimize the initial conditions.
+                     Whether to optimize the initial conditions.  (default = True)
 
           x0 : float, optional
-               Initial value of the initial conditions.
+               Initial value of the initial conditions.  (default = 0.1)
 
           mode : str, optional
-                 `continuous` or `batch` training/running mode.
+                 `continuous` or `batch` training/running mode.  (default = 'batch')
 
-          tau : float or numpy.ndarray, optional
-                Time constant(s) for recurrent units.
+          tau : float or numpy.ndarray, optional  
+                Time constant(s) for recurrent units.  (default = 100)
 
-          Cin : numpy.ndarray or Connectivity, optional
+          Cin : numpy.ndarray or Connectivity, optional             ****
                 Input weight structure.
 
-          Crec : numpy.ndarray or Connectivity, optional
+          Crec : numpy.ndarray or Connectivity, optional            ****
                  Recurrent weight structure.
 
-          Cout : numpy.ndarray or Connectivity, optional
+          Cout : numpy.ndarray or Connectivity, optional            ****
                  Output weight structure.
 
-          ei : numpy.ndarray, optional
-               E/I signature.
+          ei : numpy.ndarray, optional                              
+               E/I signature.   (default = None)
 
           ei_positive_func : str, optional
-                             Function to use to keep weights positive.
+                             Function to use to keep weights positive.  (default = 'rectify')
 
           hidden_activation : str, optional
-                              Hidden activation function.
+                              Hidden activation function.  (default = 'rectify')
 
           output_activation: str, optional
-                             Output activation function.
+                             Output activation function.  (default = 'linear')
 
           n_gradient : int, optional
-                       Minibatch size for gradient dataset.
+                       Minibatch size for gradient dataset.  (default = 20)
 
           n_validation : int, optional
-                         Minibatch size for validation dataset.
+                         Minibatch size for validation dataset.  (default = 1000)
 
-          gradient_batch_size, validation_batch_size : int, optional
+          gradient_batch_size, validation_batch_size : int, optional                        ****
                                                        Number of trials to precompute
                                                        and store in each dataset. Make
                                                        sure the batch sizes are larger
                                                        than the minibatch sizes.
 
           lambda_Omega : float, optinonal
-                         Multiplier for the vanishing gradient regularizer.
+                         Multiplier for the vanishing gradient regularizer.  (default = 2)
 
           lambda1_in, lambda1_rec, lambda1_out : float, optional
-                                                 Multipliers for L1 weight regularization.
+                                                 Multipliers for L1 weight regularization.  (default = 0)
 
           lambda2_in, lambda2_rec, lambda2_out : float, optional
-                                                 Multipliers for L2 weight regularization.
+                                                 Multipliers for L2 weight regularization.  (default = 0)
 
           lambda2_r : float, optional
-                      Multiplier for L2 firing rate regularization.
+                      Multiplier for L2 firing rate regularization.  (default = 0)
 
-          callback : function, optional
+          callback : function, optional                     ****
                      Evaluate validation dataset.
 
-          performance : function, optional
+          performance : function, optional                  ****
                         Performance measure.
 
-          terminate : function, optional
-                      Custom termination criterion.
+          terminate : function, optional                    
+                      Custom termination criterion.  (default = (lambda performance_history: False))
 
-          min_error : float, optional
-                      Target error. Terminate if error is less than or equal.
+          min_error : float, optional                       
+                      Target error. Terminate if error is less than or equal.  (default = 0)
 
           learning_rate : float, optional
-                          Learning rate for gradient descent.
+                          Learning rate for gradient descent.  (default = 1e-2)
 
           max_gradient_norm : float, optional
-                              Clip gradient if its norm is greater than.
+                              Clip gradient if its norm is greater than.  (default = 1)
 
           bound : float, optional
-                  Lower bound for denominator in vanishing gradient regularizer.
+                  Lower bound for denominator in vanishing gradient regularizer.  (default = 1e-20)
 
           baseline_in : float, optional
-                        Baseline input rate.
+                        Baseline input rate.  (default = 0.2)
 
           var_in : float or numpy.ndarray, optional
-                   Variance(s) for inputs.
+                   Variance(s) for inputs.  (default = 0.01**2)
 
-          var_rec : float or numpy.ndarray, optional
+          var_rec : float or numpy.ndarray, optional  
                     If `float` or 1D `numpy.ndarray`, then recurrent units receive
                     independent noise. If 2D `numpy.ndarray`, then noise is drawn
-                    from a multivariable normal distribution.
+                    from a multivariable normal distribution.  (default = 0.15**2)
 
           seed, gradient_seed, validation_seed : int, optional
-                                                 Seeds for the random number generators.
+                                                 Seeds for the random number generators.  (default = 1234, 11, 12)
 
           structure : dict, optional
-                      Convey structure information, such as what each input represents.
+                      Convey structure information, such as what each input represents.  (default = {})
 
           rho0 : float, optional
-                 Spectral radius for the initial recurrent weight matrix.
+                 Spectral radius for the initial recurrent weight matrix.  (default = 1.5)
 
           max_iter : int, optional
-                     Maximum number of iterations for gradient descent.
+                     Maximum number of iterations for gradient descent.  (default = int(1e7))
 
-          dt : float, optional
-               Integration time step.
+          dt : float, optional                                                          ****
+               Integration time step.  
 
-          distribution_in : str, optional
+          distribution_in : str, optional                                               ****
                             Distribution for the initial input weight matrix.
 
-          distribution_rec : str, optional
+          distribution_rec : str, optional                                              ****
                              Distribution for the initial recurrent weight matrix.
 
-          distribution_out : str, optional
+          distribution_out : str, optional                                              ****
                              Distribution for the initial output weight matrix.
 
           gamma_k : float, optional
-                    k in Gamma(k, theta). Note mean = k*theta, var = k*theta^2.
+                    k in Gamma(k, theta). Note mean = k*theta, var = k*theta^2.  (default = 2)
 
-          checkfreq : int, optional
-                      Frequency with which to evaluate validation error.
+          checkfreq : int, optional                                             ****
+                      Frequency with which to evaluate validation error.  
 
-          patience : int, optional
+          patience : int, optional                                              ****
                      Terminate training if the objective function doesn't change
                      for longer than `patience`.
 
@@ -195,7 +195,7 @@ class Trainer(object):
                  Floating-point type.
 
         """
-        self.p      = params.copy()
+        self.p      = params.copy()  # get only parameters defined in a modelfile
         self.floatX = floatX
 
         #---------------------------------------------------------------------------------
@@ -208,9 +208,9 @@ class Trainer(object):
 
         # Time constants
         if not np.isscalar(self.p['tau']):
-            self.p['tau'] = np.asarray(self.p['tau'], dtype=floatX)
+            self.p['tau'] = np.asarray(self.p['tau'], dtype=floatX)    #so there can be more than 1 tau?
 
-        # Time step
+        # Time step: if no dt given set it to 1/5 of tau or the smallest tau
         if self.p['dt'] is None:
             if np.isscalar(self.p['tau']):
                 self.p['dt'] = self.p['tau']/5
@@ -251,13 +251,13 @@ class Trainer(object):
                     C[i,exc]  = 1
                     C[i,i]    = 0
                     C[i,inh]  = 1
-                    C[i,inh] *= np.sum(C[i,exc])/np.sum(C[i,inh])
+                    C[i,inh] *= np.sum(C[i,exc])/np.sum(C[i,inh])   #to normalize the effect of excitatory inputs to match inhibitory inputs
                 for i in inh:
                     C[i,exc]  = 1
                     C[i,inh]  = 1
                     C[i,i]    = 0
-                    C[i,inh] *= np.sum(C[i,exc])/np.sum(C[i,inh])
-                C /= np.linalg.norm(C, axis=1)[:,np.newaxis]
+                    C[i,inh] *= np.sum(C[i,exc])/np.sum(C[i,inh])   #to normalize the effect of excitatory inputs to match inhibitory inputs
+                C /= np.linalg.norm(C, axis=1)[:,np.newaxis]        #to make the Euclidean norm of each rows of Crec to equals 1
 
                 self.p['Crec'] = C
             else:
@@ -281,14 +281,14 @@ class Trainer(object):
         Parameters
         ----------
 
-        rng : numpy.random.RandomState
+        rng : numpy.random.RandomState   (created in the class method 'train' of Train class)
               Random number generator.
 
         C : Connectivity
-            Specify which weights are plastic and nonzero.
+            Specify which weights are plastic and nonzero.  (a 'Connectivity' class object)
 
         m, n : int
-               Number of rows and columns, respectively.
+               Number of rows and columns, respectively.   ??? why not get it from C.shape 
 
         distribution : str
                        Name of the distribution.
@@ -296,15 +296,15 @@ class Trainer(object):
         """
         # Account for plastic and fixed weights.
         if C is not None:
-            mask = C.plastic
-            size = C.nplastic
+            mask = C.plastic   #an 1-dimensional array of non-zero mask elements (affected by normalization above)
+            size = C.nplastic  #int
         else:
             mask = 1
             size = m*n
 
         # Distributions
         if distribution == 'uniform':
-            w = 0.1*rng.uniform(-mask, mask, size=size)
+            w = 0.1*rng.uniform(-mask, mask, size=size)                 # w is allowed to be negative just in case Dale's principle is disabled
         elif distribution == 'normal':
             w = rng.normal(np.zeros(size), mask, size=size)
         elif distribution == 'gamma':
@@ -329,7 +329,7 @@ class Trainer(object):
 
         return W.reshape((m, n))
 
-    def train(self, savefile, task, recover=True):
+    def train(self, savefile, task, recover=True):              #task is a class object containing a class method generate_trial
         """
         Train the RNN.
 
@@ -453,14 +453,14 @@ class Trainer(object):
         #---------------------------------------------------------------------------------
 
         if Nin > 0:
-            Win = theanotools.shared(Win_0, name='Win')
+            Win = theanotools.shared(Win_0, name='Win')                 #creating SharedVariables with initial/default values
         else:
             Win = None
-        Wrec = theanotools.shared(Wrec_0, name='Wrec')
-        Wout = theanotools.shared(Wout_0, name='Wout')
-        brec = theanotools.shared(brec_0, name='brec')
-        bout = theanotools.shared(bout_0, name='bout')
-        x0   = theanotools.shared(x0_0,   name='x0')
+        Wrec = theanotools.shared(Wrec_0, name='Wrec')                  #creating SharedVariables with initial/default values
+        Wout = theanotools.shared(Wout_0, name='Wout')                  #creating SharedVariables with initial/default values
+        brec = theanotools.shared(brec_0, name='brec')                  #creating SharedVariables with initial/default values
+        bout = theanotools.shared(bout_0, name='bout')                  #creating SharedVariables with initial/default values
+        x0   = theanotools.shared(x0_0,   name='x0')                    #creating SharedVariables with initial/default values
 
         #---------------------------------------------------------------------------------
         # Parameters to train
@@ -506,10 +506,10 @@ class Trainer(object):
                 settings['sparseness (Win)'] = ('p = {:.2f}, p_plastic = {:.2f}'
                                                 .format(C.p, C.p_plastic))
 
-                Cin_mask_plastic = theanotools.shared(C.mask_plastic)
-                Cin_mask_fixed   = theanotools.shared(C.mask_fixed)
+                Cin_mask_plastic = theanotools.shared(C.mask_plastic)   #creating SharedVariables with initial/default values
+                Cin_mask_fixed   = theanotools.shared(C.mask_fixed)     #creating SharedVariables with initial/default values
 
-                Win_ = Cin_mask_plastic*Win + Cin_mask_fixed
+                Win_ = Cin_mask_plastic*Win + Cin_mask_fixed            #creating SharedVariables with initial/default values **apply Dale's below
                 Win_.name = 'Win_'
             else:
                 Win_ = Win
@@ -520,10 +520,10 @@ class Trainer(object):
             settings['sparseness (Wrec)'] = ('p = {:.2f}, p_plastic = {:.2f}'
                                              .format(C.p, C.p_plastic))
 
-            Crec_mask_plastic = theanotools.shared(C.mask_plastic)
-            Crec_mask_fixed   = theanotools.shared(C.mask_fixed)
+            Crec_mask_plastic = theanotools.shared(C.mask_plastic)      #creating SharedVariables with initial/default values
+            Crec_mask_fixed   = theanotools.shared(C.mask_fixed)        #creating SharedVariables with initial/default values
 
-            Wrec_ = Crec_mask_plastic*Wrec + Crec_mask_fixed
+            Wrec_ = Crec_mask_plastic*Wrec + Crec_mask_fixed            #creating SharedVariables with initial/default values **apply Dale's below
             Wrec_.name = 'Wrec_'
         else:
             Wrec_ = Wrec
@@ -534,10 +534,10 @@ class Trainer(object):
             settings['sparseness (Wout)'] = ('p = {:.2f}, p_plastic = {:.2f}'
                                              .format(C.p, C.p_plastic))
 
-            Cout_mask_plastic = theanotools.shared(C.mask_plastic)
-            Cout_mask_fixed   = theanotools.shared(C.mask_fixed)
+            Cout_mask_plastic = theanotools.shared(C.mask_plastic)      #creating SharedVariables with initial/default values
+            Cout_mask_fixed   = theanotools.shared(C.mask_fixed)        #creating SharedVariables with initial/default values
 
-            Wout_ = Cout_mask_plastic*Wout + Cout_mask_fixed
+            Wout_ = Cout_mask_plastic*Wout + Cout_mask_fixed            #creating SharedVariables with initial/default values **apply Dale's below
             Wout_.name = 'Wout_'
         else:
             Wout_ = Wout
@@ -559,13 +559,13 @@ class Trainer(object):
 
             # Assume inputs are excitatory
             if Nin > 0:
-                Win_ = make_positive(Win_)
+                Win_ = make_positive(Win_)                      #  **apply Dale's
 
             # E/I
-            ei    = theanotools.shared(self.p['ei'], name='ei')
-            Wrec_ = make_positive(Wrec_)*ei
+            ei    = theanotools.shared(self.p['ei'], name='ei')         #creating SharedVariables with initial/default values
+            Wrec_ = make_positive(Wrec_)*ei                     #  **apply Dale's
 
-            Wout_ = make_positive(Wout_)*ei
+            Wout_ = make_positive(Wout_)*ei                     #  **apply Dale's
 
         #---------------------------------------------------------------------------------
         # Variables to save
@@ -598,17 +598,17 @@ class Trainer(object):
             f_loss = theanotools.L2
 
         #---------------------------------------------------------------------------------
-        # RNN
+        # RNN                                                                                       *****THIS RNN USE SIMPLE EULER'S METHOD CAN BE EDIT LATER*****
         #---------------------------------------------------------------------------------
 
         # Dims: time, trials, units
         # u[:,:,:Nin]  contains the inputs (including baseline and noise),
         # u[:,:,Nin:]  contains the recurrent noise
-        u   = T.tensor3('u')
-        x0_ = T.alloc(x0, u.shape[1], x0.shape[0])
+        u   = T.tensor3('u')  #
+        x0_ = T.alloc(x0, u.shape[1], x0.shape[0])   # 
 
         if Nin > 0:
-            def rnn(u_t, x_tm1, r_tm1, WinT, WrecT):
+            def rnn(u_t, x_tm1, r_tm1, WinT, WrecT):                        # you have to put the arguments of the function in this exact order?: sequences, outputs_info, non_sequences?? to work with theano.scan(
                 x_t = ((1 - alpha)*x_tm1
                        + alpha*(T.dot(r_tm1, WrecT)        # Recurrent
                                 + brec                     # Bias
@@ -619,10 +619,10 @@ class Trainer(object):
 
                 return [x_t, r_t]
 
-            [x, r], _ = theano.scan(fn=rnn,
+            [x, r], _ = theano.scan(fn=rnn,                                 # size of both x and r are going to be trials * times * N  (T.tensor3)
                                     outputs_info=[x0_, f_hidden(x0_)],
-                                    sequences=u,
-                                    non_sequences=[Win_.T, Wrec_.T])
+                                    sequences=u,                            # sequencing the u in each as a vector in each time and trial
+                                    non_sequences=[Win_.T, Wrec_.T])        # before train we have to generate all trails we need in a batch before contain it in u
         else:
             def rnn(u_t, x_tm1, r_tm1, WrecT):
                 x_t = ((1 - alpha)*x_tm1
@@ -634,7 +634,7 @@ class Trainer(object):
 
                 return [x_t, r_t]
 
-            [x, r], _ = theano.scan(fn=rnn,
+            [x, r], _ = theano.scan(fn=rnn,                                 
                                     outputs_info=[x0_, f_hidden(x0_)],
                                     sequences=u,
                                     non_sequences=[Wrec_.T])
@@ -651,7 +651,7 @@ class Trainer(object):
                       " so we're setting n_gradient to 1.")
                 self.p['n_gradient'] = 1
 
-            x0_ = x[-1]
+            x0_ = x[-1]             #
         else:
             settings['mode'] = 'batch'
 
@@ -764,11 +764,11 @@ class Trainer(object):
         # Datasets
         #---------------------------------------------------------------------------------
 
-        gradient_data   = Dataset(self.p['n_gradient'], task, self.floatX, self.p,
+        gradient_data   = Dataset(self.p['n_gradient'], task, self.floatX, self.p,      #init
                                   batch_size=self.p['gradient_batch_size'],
                                   seed=self.p['gradient_seed'],
                                   name='gradient')
-        validation_data = Dataset(self.p['n_validation'], task, self.floatX, self.p,
+        validation_data = Dataset(self.p['n_validation'], task, self.floatX, self.p,    #init
                                   batch_size=self.p['validation_batch_size'],
                                   seed=self.p['validation_seed'],
                                   name='validation')
@@ -818,6 +818,6 @@ class Trainer(object):
 
         print_settings(settings)
 
-        sgd = SGD(trainables, inputs, costs, regs, x, z, self.p, save_values,
+        sgd = SGD(trainables, inputs, costs, regs, x, z, self.p, save_values,           # save_values = lists of all SharedVariables
                   {'Wrec_': Wrec_, 'd_f_hidden': d_f_hidden})
         sgd.train(gradient_data, validation_data, savefile)

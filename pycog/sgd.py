@@ -52,7 +52,7 @@ class SGD(object):
                      List of Theano variables to optimize.
 
         inputs : [inputs, targets]
-                 Dataset used to train the RNN.
+                 Dataset used to train the RNN.  (still Theano variables though, coming from the scan)
 
         costs : [loss, ...]
                 `costs[0]` is the loss that is optimized. `costs[1:]` are used for
@@ -80,18 +80,18 @@ class SGD(object):
                  be needed by other training algorithms (e.g., Hessian-free).
 
         """
-        self.trainables  = trainables
+        self.trainables  = trainables   # [Win, Wrec, Wout, brec, bout, x0]
         self.p           = params
-        self.save_values = save_values
+        self.save_values = save_values  # [Win_, Wrec_, Wout_, brec, bout, x0]
 
         # Trainable variable names
-        self.trainable_names = [tr.name for tr in trainables]
+        self.trainable_names = [tr.name for tr in trainables]  # ['Win', 'Wrec', 'Wout', 'brec', 'bout', 'x0']
 
         #---------------------------------------------------------------------------------
         # Setup
         #---------------------------------------------------------------------------------
 
-        lambda_Omega = T.scalar('lambda_Omega')
+        lambda_Omega = T.scalar('lambda_Omega')   # all is var
         lr           = T.scalar('lr')
         maxnorm      = T.scalar('maxnorm')
         bound        = T.scalar('bound')
@@ -286,8 +286,8 @@ class SGD(object):
         # Continue previous run if we can
         #---------------------------------------------------------------------------------
 
-        if os.path.isfile(savefile):
-            with open(savefile) as f:
+        if os.path.isfile(savefile):     # if already exist the save file
+            with open(savefile, 'rb') as f:
                 save = pickle.load(f)
             best          = save['best']
             init_p        = save['current']

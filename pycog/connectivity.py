@@ -70,8 +70,8 @@ class Connectivity(object):
 
             C = np.zeros((N, N), dtype=int)
             k = 0
-            for i in xrange(N):
-                for j in xrange(N):
+            for i in range(N):
+                for j in range(N):
                     if i == j: continue
 
                     C[i,j] = x[k]
@@ -103,9 +103,9 @@ class Connectivity(object):
         self.size  = C.size
 
         # Plastic weights
-        self.plastic      = C[np.where(C != 0)]
+        self.plastic      = C[np.where(C != 0)]   #an 1-dimensional array of non-zero mask elements
         self.nplastic     = len(self.plastic)
-        self.idx_plastic, = np.where(C.ravel() != 0)
+        self.idx_plastic, = np.where(C.ravel() != 0) #an 1-dim array of the index i of C.ravel()[i] that is non-zero value  
 
         # Fixed weights
         if Cfixed is not None:
@@ -117,11 +117,11 @@ class Connectivity(object):
             self.nfixed    = 0
             self.idx_fixed = np.zeros(0, dtype=int)
 
-        # Check that indices do not overlap
+        # Check that indices do not overlap (any indices of plastic and fixed must not be the same)
         assert len(np.intersect1d(self.idx_plastic, self.idx_fixed)) == 0
 
         self.p_plastic = self.nplastic/self.size
-        self.p         = (self.nplastic + self.nfixed)/self.size
+        self.p         = (self.nplastic + self.nfixed)/self.size  #ratio of non-zero connectivity (both fixed and plastic) to all connectivity
 
         # Mask for plastic weights
         w = np.zeros(C.size)

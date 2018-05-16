@@ -147,7 +147,7 @@ class RNN(object):
             while True:
                 shutil.copyfile(savefile, savefile_copy)
                 try:
-                    with file(savefile_copy, 'rb') as f:
+                    with open(savefile_copy, 'rb') as f:
                         save = pickle.load(f)
                     break
                 except EOFError:
@@ -534,8 +534,8 @@ class RNN(object):
             W = W[:,np.newaxis]
 
         im = np.ones(W.shape + (3,))
-        for i in xrange(W.shape[0]):
-            for j in xrange(W.shape[1]):
+        for i in range(W.shape[0]):
+            for j in range(W.shape[1]):
                 if W[i,j] > 0:
                     im[i,j] = smap_exc.to_rgba(W[i,j])[:3]
                 elif W[i,j] < 0:

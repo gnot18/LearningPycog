@@ -104,7 +104,7 @@ def train(model, seed=None):
     np.savetxt(timefile, [totalmins], fmt='%d')
 
 def train_seeds(model, start_seed=1, ntrain=5):
-    for seed in xrange(start_seed, start_seed+ntrain):
+    for seed in range(start_seed, start_seed+ntrain):
         suffix = '_s{}'.format(seed)
         s = ' --seed {} --suffix {}'.format(seed, suffix)
 

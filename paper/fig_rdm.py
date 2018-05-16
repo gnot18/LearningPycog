@@ -176,7 +176,7 @@ coh      = 8
 t  = np.linspace(0, t_decision[1], 201)
 u0 = baseline + 0.1*rng.normal(size=len(t))
 u1 = baseline + 0.1*rng.normal(size=len(t))
-for i in xrange(len(t)):
+for i in range(len(t)):
     if t_stimulus[0] < t[i] <= t_stimulus[1]:
         u0[i] += (1 + 3.2*coh/100)/2
         u1[i] += (1 - 3.2*coh/100)/2
@@ -236,7 +236,7 @@ coh      = 8
 t  = np.linspace(0, t_decision[1], 201)
 u0 = baseline + 0.1*rng.normal(size=len(t))
 u1 = baseline + 0.1*rng.normal(size=len(t))
-for i in xrange(len(t)):
+for i in range(len(t)):
     if t[i] > FIX:
         u0[i] += (1 + 3.2*coh/100)/2
         u1[i] += (1 - 3.2*coh/100)/2

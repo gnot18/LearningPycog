@@ -22,7 +22,7 @@ class Dataset(object):
         size : int
                Number of trials in each minibatch.
 
-        task : Python function
+        task : Python function  
 
         floatX : dtype
                  Floating-point type for NumPy arrays.
@@ -41,9 +41,9 @@ class Dataset(object):
                between gradient and validation datasets.
 
         """
-        self.minibatch_size = size
-        self.task           = task
-        self.floatX         = floatX
+        self.minibatch_size = size     # depends on what dataset we're trying to make: to compute gradients or to validate the costs
+        self.task           = task     # task.generate_trial() is what we want
+        self.floatX         = floatX   
         self.name           = name
         self.network_shape  = (p['Nin'], p['N'], p['Nout'])
         for k in ['dt', 'rectify_inputs', 'baseline_in']:

@@ -4,7 +4,7 @@ Analyze variants of the random dots motion task.
 """
 from __future__ import division
 
-import cPickle as pickle
+import pickle
 import os
 import sys
 from   os.path import join
@@ -117,7 +117,7 @@ def run_trials(p, args):
     trials = []
     backspaces = 0
     try:
-        for i in xrange(ntrials):
+        for i in range(ntrials):
             b = i % (m.nconditions + 1)
             if b == 0:
                 # Zero-coherence condition
@@ -716,7 +716,7 @@ def do(action, args, p):
         with open(sortedfile) as f:
             t, sorted_trials = pickle.load(f)
 
-        for i in xrange(p['model'].N):
+        for i in range(p['model'].N):
             # Check if the unit does anything
             active = False
             for r in sorted_trials.values():
@@ -765,7 +765,7 @@ def do(action, args, p):
         with open(sortedfile) as f:
             t, sorted_trials = pickle.load(f)
 
-        for i in xrange(p['model'].N):
+        for i in range(p['model'].N):
             # Check if the unit does anything
             active = False
             for r in sorted_trials.values():

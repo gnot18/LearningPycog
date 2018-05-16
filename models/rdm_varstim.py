@@ -25,6 +25,8 @@ Nin  = 3
 N    = 100
 Nout = 2
 
+
+
 # E/I
 ei, EXC, INH = tasktools.generate_ei(N)
 
@@ -42,10 +44,11 @@ Cout[:,EXC] = 1
 # Task structure
 #-----------------------------------------------------------------------------------------
 
-cohs        = [1, 2, 4, 8, 16]
-in_outs     = [1, -1]
-nconditions = len(cohs)*len(in_outs)
-pcatch      = 1/(nconditions + 1)
+cohs         = [1, 2, 4, 8, 16]
+in_outs      = [1, -1]
+nconditions  = len(cohs)*len(in_outs)
+
+pcatch       = 1/(nconditions + 1)
 
 SCALE = 3.2
 def scale(coh):

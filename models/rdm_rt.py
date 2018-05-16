@@ -42,35 +42,35 @@ Cout[:,EXC] = 1
 # Task structure
 #-----------------------------------------------------------------------------------------
 
-cohs        = [1, 2, 4, 8, 16]
-in_outs     = [1, -1]
-nconditions = len(cohs)*len(in_outs)
-pcatch      = 5/(nconditions + 1)
+cohs        = [1, 2, 4, 8, 16]              # coherences
+in_outs     = [1, -1]                       # in (1) is the value of one output unit target values which is in the receptive field of that neuron (the output unit)
+nconditions = len(cohs)*len(in_outs)        # 10 different task to train 
+pcatch      = 5/(nconditions + 1)           # wtf????????????????????
 
 SCALE = 3.2
 def scale(coh):
     return (1 + SCALE*coh/100)/2
 
-def generate_trial(rng, dt, params):
+def generate_trial(rng, dt, params):      # is called in dataset.Dataset.update to generate trial and put them in u and target (inputs = [u, targets]) detailed in trainer
     #-------------------------------------------------------------------------------------
     # Select task condition
     #-------------------------------------------------------------------------------------
 
-    catch_trial = False
-    if params['name'] in ['gradient', 'test']:
-        if params.get('catch', rng.rand() < pcatch):
+    catch_trial = False                             # when catch_trial is on all the inputs are zero --> train the network not to make any decision
+    if params['name'] in ['gradient', 'test']:     # the name of the Dataset object: now we have 'gradient' or 'validation' or default: 'Dataset'
+        if params.get('catch', rng.rand() < pcatch):   # if there's no 'catch' in the dict get the boolean rng.rand() < pcatch instead, now pcatch is 5/11
             catch_trial = True
         else:
-            coh    = params.get('coh',    rng.choice(cohs))
-            in_out = params.get('in_out', rng.choice(in_outs))
-    elif params['name'] == 'validation':
-        b = params['minibatch_index'] % (nconditions + 1)
+            coh    = params.get('coh',    rng.choice(cohs))         # return random value from cohs
+            in_out = params.get('in_out', rng.choice(in_outs))      # same
+    elif params['name'] == 'validation':            # particularly for validation dataset
+        b = params['minibatch_index'] % (nconditions + 1)           # 'minibatch_index' is only in the update method usually 20 for n_gradient and 1000 for n_validation, b = 10
         if b == 0:
             catch_trial = True
         else:
-            k0, k1 = tasktools.unravel_index(b-1, (len(cohs), len(in_outs)))
-            coh    = cohs[k0]
-            in_out = in_outs[k1]
+            k0, k1 = tasktools.unravel_index(b-1, (len(cohs), len(in_outs)))  # k0 = 4, k1 = 1
+            coh    = cohs[k0]       # 8, obviously
+            in_out = in_outs[k1]    # -1                ===>  catch_trial = False
     else:
         raise ValueError("Unknown trial type.")
 
@@ -81,7 +81,7 @@ def generate_trial(rng, dt, params):
     if catch_trial:
         epochs = {'T': 2000}
     else:
-        if params['name'] == 'test':
+        if params['name'] == 'test':                # there's no 'test' in params['name'] in whatever cases
             fixation = 300
             stimulus = 1500
         else:
@@ -134,7 +134,7 @@ def generate_trial(rng, dt, params):
     # Target output
     #-------------------------------------------------------------------------------------
 
-    if params.get('target_output', False):
+    if params.get('target_output', False):                  #check if params['target_output'] exist because we will always assign it to be True
         Y = np.zeros((len(t), Nout)) # Output matrix
         M = np.zeros_like(Y)         # Mask matrix
 

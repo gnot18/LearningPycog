@@ -37,6 +37,8 @@ THIS = "pycog.figtools"
 mpl.rcParams['font.family']        = 'sans-serif'
 mpl.rcParams['ps.useafm']          = True
 mpl.rcParams['pdf.use14corefonts'] = True
+mpl.rcParams['text.usetex'] = True
+mpl.rcParams['text.latex.preamble'] = [r'\usepackage{amsmath}']
 
 # Setup LaTeX if available
 try:
@@ -51,10 +53,10 @@ else:
     latex = True
     mpl.rcParams['text.usetex'] = True
     mpl.rcParams['text.latex.preamble'] = (
-        '\usepackage{sfmath}'
-        '\usepackage[T1]{fontenc}'
-        '\usepackage{amsmath}'
-        '\usepackage{amssymb}'
+        r'\usepackage{sfmath}'
+        r'\usepackage[T1]{fontenc}'
+        r'\usepackage{amsmath}'
+        r'\usepackage{amssymb}'
         )
 
 #=========================================================================================

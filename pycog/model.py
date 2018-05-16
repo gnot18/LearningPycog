@@ -118,7 +118,7 @@ class Model(object):
             os.environ['THEANO_FLAGS'] += ',base_compiledir=' + compiledir
         os.environ['THEANO_FLAGS'] += ',floatX=float32,allow_gc=False'
         if gpus > 0:
-            os.environ['THEANO_FLAGS'] += ',device=gpu,nvcc.fastmath=True'
+            os.environ['THEANO_FLAGS'] += ',device=cuda,nvcc.fastmath=True'
 
         # Only involve Theano for training
         from .trainer import Trainer
