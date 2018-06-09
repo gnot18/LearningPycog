@@ -146,7 +146,11 @@ def correct_2afc_bias(trials, z, rmin=0.45, rmax=0.55):
                                                          # trials: get_trial() return all trial (dict) in validation_data
 def performance_2afc(trials, z):                         # z: z.get_value (function in theano) return ndarray z containing outputs for all times, trials, unit action in the validation_minibatch
     ends    = [len(trial['t'])-1 for trial in trials]    # a list of total timesteps(Nt) - 1 for all trials : size : trials
-    choices = [np.argmax(z[ends[i],i,:2]) for i, end in enumerate(ends)]  # a list of an index of the max value of z for every times and trials (which unit?) : size : trials
+    choices = [np.argmax(z[ends[i],i,:2]) for i, end in enumerate(ends)]  # a list of an index of the max value of z for every times and trials (unit number) : size : trials
+    for i, end in enumerate(ends):
+        choice_idx = np.argmax(z[ends[i],i,:2])
+        if z[ends[i],i,choice_idx] < 4.25:
+            choices[i] = None
     correct = [choice == trial['info']['choice']
                for choice, trial in zip(choices, trials) if trial['info']]
 

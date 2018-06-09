@@ -449,9 +449,10 @@ class SGD(object):
                         break
 
                     # This termination criterion assumes that performance is not None
-                    if terminate(np.array([c[-1] for _, c in costs_history])):
-                        print("Termination criterion satisfied -- we\'ll call it a day.")
-                        break
+                    if iter > first_iter+(5*checkfreq):
+                        if terminate(np.array([c[-1] for _, c in costs_history])):
+                            print("Termination criterion satisfied -- we\'ll call it a day.")
+                            break
 
                 if iter - best['iter'] > patience:
                     print("We've run out of patience -- time to give up.")

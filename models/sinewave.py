@@ -1,4 +1,4 @@
-"""
+ """
 Generate a sine wave with no input.
 
 """

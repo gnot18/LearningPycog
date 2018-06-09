@@ -26,7 +26,7 @@ def get_trialsfile(p):
 
 # Load trials
 def load_trials(trialsfile):
-    with open(trialsfile) as f:
+    with open(trialsfile,'rb' ) as f:
         trials = pickle.load(f)
 
     return trials, len(trials)
@@ -98,7 +98,7 @@ def run_trials(p, args):
     Run trials.
 
     """
-    # Model
+    # Model, (module)
     m = p['model']
 
     # Number of trials
@@ -110,7 +110,7 @@ def run_trials(p, args):
 
     # RNN
     rng = np.random.RandomState(p['seed'])
-    rnn = RNN(p['savefile'], {'dt': p['dt']}, verbose=False)
+    rnn = RNN(p['savefile'], {'dt': p['dt']}, verbose=False)  # this override the 'dt' parameter
 
     # Trials
     w = len(str(ntrials))
@@ -178,7 +178,7 @@ def run_trials(p, args):
 
 def psychometric_function(trialsfile, plot=None, threshold=False, **kwargs):
     """
-    Compute and plot the sychometric function.
+    Compute and plot the psychometric function.
 
     """
     # Load trials
@@ -216,7 +216,7 @@ def psychometric_function(trialsfile, plot=None, threshold=False, **kwargs):
     print("[ {}.psychometric_function ] {}/{} = {:.2f}% correct."
           .format(THIS, ncorrect, ntot, pcorrect))
 
-    cohs = np.sort(np.array(choice_by_coh.keys()))
+    cohs = np.sort(list(choice_by_coh.keys()))
     p0   = np.zeros(len(cohs))
     for i, coh in enumerate(cohs):
         choices = np.array(choice_by_coh[coh])

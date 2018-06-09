@@ -143,9 +143,9 @@ class Dataset(object):
         """
         self.trial_idx += self.minibatch_size
         if self.trial_idx + self.minibatch_size > self.batch_size:
-            self.trial_idx = 0
+            self.trial_idx = 0      #reset trial index and create new trials when run out of trials
 
-            self.trials = []
+            self.trials = []  #initialize
             for b in range(self.batch_size):
                 params = {
                     'callback_results': callback_results,
